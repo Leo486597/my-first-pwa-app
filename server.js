@@ -23,10 +23,10 @@ const fetch = require('node-fetch');
 const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
 
 // CODELAB: Change this to add a delay (ms) before the server responds.
-const FORECAST_DELAY = 0;
+const FORECAST_DELAY = 1000;
 
 // CODELAB: If running locally, set your Dark Sky API key here
-const API_KEY = process.env.DARKSKY_API_KEY;
+const API_KEY = process.env.DARKSKY_API_KEY || '4b72b90bd165d0b69b5ce3116f94984f';
 const BASE_URL = `https://api.darksky.net/forecast`;
 
 // Fake forecast data used if we can't reach the Dark Sky API
@@ -141,6 +141,8 @@ function generateFakeForecast(location) {
 function getForecast(req, resp) {
   const location = req.params.location || '40.7720232,-73.9732319';
   const url = `${BASE_URL}/${API_KEY}/${location}`;
+  // console.log('url', url);
+
   fetch(url).then((resp) => {
     return resp.json();
   }).then((data) => {
